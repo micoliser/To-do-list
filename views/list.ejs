@@ -1,0 +1,34 @@
+<%- include("header"); -%>
+
+<div class="box" id="heading">
+  <h1><%= listTitle %></h1>
+</div>
+
+<div class="box">
+
+  <% newListItems.forEach((item) => { %>
+    <form action="/delete" method="post">
+      <div class="item">
+        <input type="checkbox" name = "checkbox" value = <%= item._id %> onChange="this.form.submit()">
+        <input type="hidden" name="list" value=<%= listTitle %>></input>
+        <p><%= item.name %></p>
+      </div>
+    </form>
+  <% }) %>
+
+  <% if (message === "Sorry, cannot add empty list item") { %>
+  <p class="message error-message"><%= message %></p>
+  <% } else if (/^New\slist/.test(message)) { %>
+  <p class="message add-message"><%= message %></p>
+  <% } else { %>
+  <p class="message delete-message"><%= message %></p>
+  <% } %>
+
+  <form class="item" action="/" method="post">
+    <input type="text" name="nextItem" placeholder="New Item" autocomplete="off">
+    <button type="submit" name="list" value=<%= listTitle %>>+</button>
+  </form>
+
+</div>
+
+<%- include("footer"); -%>
